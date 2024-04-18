@@ -25,7 +25,7 @@
         margin-top: 15px;
       }
       a {
-        color: #ffd700;
+        color: rgb(176, 133, 255);
         text-decoration: none;
       }
       a:hover {
@@ -33,6 +33,34 @@
       }
       input[type="checkbox"] {
         margin-right: 10px;
+      }
+      .email-box {
+        margin-top: 40px;
+        background-color: #202040;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+      textarea,
+      button {
+        width: 80%; /* Make the textarea and button take up 80% of their container width */
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: none;
+      }
+      textarea {
+        height: 100px; /* Set a fixed height for the textarea */
+        resize: none; /* Disable resizing of the textarea */
+      }
+      button {
+        background-color: rgb(120, 90, 175);
+        color: #202040;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #e0c060;
       }
     </style>
   </head>
@@ -158,5 +186,54 @@
         </dl>
       </dt>
     </dl>
+    <div class="email-box">
+      <h3>Send an email to Nathan</h3>
+      <form id="myForm">
+        <input
+          type="text"
+          id="message"
+          name="message"
+          placeholder="Enter your message here"
+        />
+        <button type="button" onclick="sendEmail()">Send Email</button>
+      </form>
+    </div>
+
+    <!-- EmailJS SDK -->
+    <script
+      type="text/javascript"
+      src="https://cdn.emailjs.com/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("ecWsmMaWZQfld4_uH"); // Your EmailJS user ID
+      })();
+
+      function sendEmail() {
+        var message = document.getElementById("message").value;
+
+        // Building the data object to send
+        var templateParams = {
+          message: message, // Ensure 'message' matches the variable in your EmailJS template
+        };
+
+        emailjs
+          .send("service_u6ub1qp", "template_usermsg", templateParams)
+          .then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+
+              <!-- alert("Email sent successfully!"); -->
+            },
+            function (error) {
+              console.error("Failed to send email:", error);
+              // Improved error handling for displaying error messages
+              alert(
+                "Failed to send the email: " + JSON.stringify(error, null, 2)
+              );
+            }
+          );
+      }
+    </script>
   </body>
 </html>
