@@ -43,15 +43,15 @@
       }
       textarea,
       button {
-        width: 80%; /* Make the textarea and button take up 80% of their container width */
+        width: 80%;
         padding: 10px;
         margin-top: 10px;
         border-radius: 5px;
         border: none;
       }
-      textarea {
-        height: 100px; /* Set a fixed height for the textarea */
-        resize: none; /* Disable resizing of the textarea */
+      #message {
+        width: 80%;
+        height: 3rem;
       }
       button {
         background-color: rgb(120, 90, 175);
@@ -76,7 +76,9 @@
           <h3>Sites</h3>
           <dl>
             <dt>
-              <a href="https://prod-avs-setnaio.my.salesforce.com/"
+              <a
+                target="_blank"
+                href="https://prod-avs-setnaio.my.salesforce.com/"
                 >Salesforce</a
               >
             </dt>
@@ -89,6 +91,7 @@
               <input type="checkbox" id="teamsInstall" />
               <label for="teamsInstall">
                 <a
+                  target="_blank"
                   href="https://www.microsoft.com/en-us/microsoft-teams/download-app"
                   >Teams Install</a
                 >
@@ -97,8 +100,30 @@
             <dt>
               <input type="checkbox" id="ninite" />
               <label for="ninite">
-                <a href="https://ninite.com/avast-chrome-teamviewer15/"
+                <a
+                  target="_blank"
+                  href="https://ninite.com/avast-chrome-teamviewer15/"
                   >Ninite - Avast, Chrome, TeamViewer 15</a
+                >
+              </label>
+            </dt>
+            <dt>
+              <input type="checkbox" id="UPS" />
+              <label for="UPS">
+                <a
+                  target="_blank"
+                  href="https://www.ups.com/us/en/business-solutions/business-shipping-tools/worldship/worldship-download.page"
+                  >UPS WorldShip</a
+                >
+              </label>
+            </dt>
+            <dt>
+              <input type="checkbox" id="Fedex" />
+              <label for="FEDEX">
+                <a
+                  target="_blank"
+                  href="https://www.fedex.com/en-us/shipping/ship-manager/software.html#tab-4"
+                  >Fedex Ship Manager</a
                 >
               </label>
             </dt>
@@ -106,6 +131,7 @@
               <input type="checkbox" id="zebraUtility" />
               <label for="zebraUtility">
                 <a
+                  target="_blank"
                   href="https://www.zebra.com/us/en/support-downloads/printer-software/printer-setup-utilities.html#featureforoperatings_1457791078"
                   >Zebra Utility Download</a
                 >
@@ -115,6 +141,7 @@
               <input type="checkbox" id="brotherDownloads" />
               <label for="brotherDownloads">
                 <a
+                  target="_blank"
                   href="https://support.brother.com/g/b/productsearch.aspx?c=us&lang=en&content=dl"
                   >Brother | Downloads</a
                 >
@@ -124,6 +151,7 @@
               <input type="checkbox" id="DisplayLink" />
               <label for="DisplayLink">
                 <a
+                  target="_blank"
                   href="https://www.synaptics.com/products/displaylink-graphics/downloads/windows"
                   >DisplayLink / Synaptics</a
                 >
@@ -132,7 +160,7 @@
             <dt>
               <input type="checkbox" id="printNode" />
               <label for="printNode">
-                <a href="https://www.printnode.com/en/download"
+                <a target="_blank" href="https://www.printnode.com/en/download"
                   >PrintNode Download</a
                 >
               </label>
@@ -195,6 +223,7 @@
           name="message"
           placeholder="Enter your message here"
         />
+        <br />
         <button type="button" onclick="sendEmail()">Send Email</button>
       </form>
     </div>
@@ -206,15 +235,14 @@
     ></script>
     <script type="text/javascript">
       (function () {
-        emailjs.init("ecWsmMaWZQfld4_uH"); // Your EmailJS user ID
+        emailjs.init("ecWsmMaWZQfld4_uH");
       })();
 
       function sendEmail() {
         var message = document.getElementById("message").value;
 
-        // Building the data object to send
         var templateParams = {
-          message: message, // Ensure 'message' matches the variable in your EmailJS template
+          message: message,
         };
 
         emailjs
@@ -222,12 +250,10 @@
           .then(
             function (response) {
               console.log("SUCCESS!", response.status, response.text);
-
-              <!-- alert("Email sent successfully!"); -->
             },
             function (error) {
               console.error("Failed to send email:", error);
-              // Improved error handling for displaying error messages
+
               alert(
                 "Failed to send the email: " + JSON.stringify(error, null, 2)
               );
