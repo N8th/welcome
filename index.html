@@ -243,6 +243,10 @@
       type="text/javascript"
       src="https://cdn.emailjs.com/dist/email.min.js"
     ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.emailjs.com/dist/email.min.js"
+    ></script>
     <script type="text/javascript">
       (function () {
         emailjs.init("ecWsmMaWZQfld4_uH");
@@ -288,7 +292,6 @@
         var checkedItems = "<strong>Checked Items:</strong><ul>";
         var uncheckedItems = "<strong>Unchecked Items:</strong><ul>";
 
-        // Fetch all checkboxes
         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
         console.log("Total checkboxes found: " + checkboxes.length);
         checkboxes.forEach(function (checkbox) {
@@ -312,6 +315,7 @@
         console.log("Email Content: ", message);
 
         var templateParams = {
+          name: name,
           message: message,
         };
 
