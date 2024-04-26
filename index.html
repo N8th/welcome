@@ -219,12 +219,22 @@
       <form id="myForm">
         <input
           type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your name"
+          style="float: right; margin-bottom: 10px"
+        />
+        <input
+          type="text"
           id="message"
           name="message"
           placeholder="Enter your message here"
         />
         <br />
         <button type="button" onclick="sendEmail()">Send Email</button>
+        <button type="button" onclick="sendCheckedEmail()">
+          Send Email with Checked Items
+        </button>
       </form>
     </div>
 
@@ -239,7 +249,67 @@
       })();
 
       function sendEmail() {
+        var name = document.getElementById("name").value;
         var message = document.getElementById("message").value;
+        var fullMessage = "<strong>Message:</strong><br/>" + message;
+
+        var templateParams = {
+          name: name, // Include the name
+          message: fullMessage,
+        };
+
+        emailjs
+          .send("service_u6ub1qp", "template_usermsg", templateParams)
+          .then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+              alert("Email sent successfully!");
+            },
+            function (error) {
+              console.error("Failed to send email:", error);
+              alert(
+                "Failed to send the email: " + JSON.stringify(error, null, 2)
+              );
+            }
+          );
+      }
+
+      function sendCheckedEmail() {
+        console.log("Attempting to send email with checked items.");
+        var name = document.getElementById("name").value;
+        var introText = document.getElementById("message").value;
+        var message =
+          "<strong>Name:</strong> " +
+          name +
+          "<br/><strong>User Message:</strong><br/>" +
+          introText +
+          "<br/><br/>";
+
+        var checkedItems = "<strong>Checked Items:</strong><ul>";
+        var uncheckedItems = "<strong>Unchecked Items:</strong><ul>";
+
+        // Fetch all checkboxes
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        console.log("Total checkboxes found: " + checkboxes.length);
+        checkboxes.forEach(function (checkbox) {
+          var labelElement = document.querySelector(
+            'label[for="' + checkbox.id + '"]'
+          );
+          var label = labelElement
+            ? labelElement.textContent.trim()
+            : "Label not found for ID: " + checkbox.id;
+          if (checkbox.checked) {
+            checkedItems += "<li>" + label + "</li>";
+          } else {
+            uncheckedItems += "<li>" + label + "</li>";
+          }
+        });
+
+        checkedItems += "</ul>";
+        uncheckedItems += "</ul>";
+
+        message += checkedItems + "<br/>" + uncheckedItems;
+        console.log("Email Content: ", message);
 
         var templateParams = {
           message: message,
@@ -250,10 +320,12 @@
           .then(
             function (response) {
               console.log("SUCCESS!", response.status, response.text);
+              alert(
+                "Email sent successfully with checked and unchecked items!"
+              );
             },
             function (error) {
               console.error("Failed to send email:", error);
-
               alert(
                 "Failed to send the email: " + JSON.stringify(error, null, 2)
               );
