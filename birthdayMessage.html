@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Wish Template</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+      }
+      .output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Birthday Wish Generator</h1>
+      <form id="birthdayForm">
+        <label for="name">Full Name:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="weekend">Is it a weekend?</label>
+        <input type="checkbox" id="weekend" name="weekend" /><br /><br />
+
+        <input type="submit" value="Generate" />
+      </form>
+
+      <div class="output" id="output"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("birthdayForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var name = document.getElementById("name").value;
+          var firstName = name.split(" ")[0];
+          var isWeekend = document.getElementById("weekend").checked;
+          var weekendText = isWeekend ? "this weekend" : "";
+
+          var output = `
+                Hi everyone,<br><br>
+                Please join me in wishing ${name} a very Happy Birthday today!<br><br>
+                ${firstName} isn't copied on this email, but I'm sure he would love to have his inbox flooded with well wishes ${weekendText}!<br><br>
+                Have a great day!
+            `;
+
+          document.getElementById("output").innerHTML = output;
+        });
+    </script>
+  </body>
+</html>
