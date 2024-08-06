@@ -78,11 +78,27 @@
 
         <div class="template-options">
           <label for="template">Choose a template:</label><br />
-          <input type="radio" id="template1" name="template" value="template1" checked />
+          <input
+            type="radio"
+            id="template1"
+            name="template"
+            value="template1"
+            checked
+          />
           <label for="template1">Template 1</label><br />
-          <input type="radio" id="template2" name="template" value="template2" />
+          <input
+            type="radio"
+            id="template2"
+            name="template"
+            value="template2"
+          />
           <label for="template2">Template 2</label><br />
-          <input type="radio" id="template3" name="template" value="template3" />
+          <input
+            type="radio"
+            id="template3"
+            name="template"
+            value="template3"
+          />
           <label for="template3">Template 3</label><br />
         </div>
 
@@ -90,7 +106,9 @@
       </form>
 
       <div class="output" id="output"></div>
-      <button id="copyButton" onclick="copyToClipboard()">Copy to Clipboard</button>
+      <button id="copyButton" onclick="copyToClipboard()">
+        Copy to Clipboard
+      </button>
     </div>
 
     <script>
@@ -103,7 +121,9 @@
           var firstName = name.split(" ")[0];
           var isWeekend = document.getElementById("weekend").checked;
           var weekendText = isWeekend ? "this weekend" : "";
-          var genderElements = document.querySelectorAll('input[name="gender"]');
+          var genderElements = document.querySelectorAll(
+            'input[name="gender"]'
+          );
           var gender = "they";
           var pronoun = "their";
 
@@ -119,7 +139,9 @@
             }
           });
 
-          var template = document.querySelector('input[name="template"]:checked').value;
+          var template = document.querySelector(
+            'input[name="template"]:checked'
+          ).value;
           var output = "";
 
           if (template === "template1") {
