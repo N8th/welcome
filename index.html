@@ -197,7 +197,7 @@
               <input type="checkbox" id="BrotherWebConnect" />
               <label for="BrotherWebConnect">
                 <a target="_blank" href="https://www.brother-usa.com/brother-web-connect">
-                  <img src="./logos/brotherLogo.jpg" alt="Brother Logo" width="20"  height="20" /> BWC / Brother Web Connect
+                  <img src="./logos/brotherLogo.jpg" alt="Brother Logo" width="20" height="20" /> BWC / Brother Web Connect
                 </a>
               </label>
             </dt>
@@ -205,18 +205,18 @@
               <input type="checkbox" id="OneDrive" />
               <label for="OneDrive">
                 <a target="_blank" href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">
-                  <img src="./logos/OneDriveLogo.png" alt="OneDrive Logo" width="20"  height="20" /> OneDrive
+                  <img src="./logos/OneDriveLogo.png" alt="OneDrive Logo" width="20" height="20" /> OneDrive
                 </a>
                 <a class="file" target="_blank" href="odopen://launch">
-                   Open OneDrive (RVD)
+                  Open OneDrive (RVD)
                 </a>
                 <span> | </span>
                 <a class="file" target="_blank" href="https://imperialgp.sharepoint.com/sites/Setna_iO/Setna%20IO%20Collab">
-                   Setna Collab
+                  Setna Collab
                 </a>
                 <span> | </span>
                 <a class="file" target="_blank" href="https://imperialgp.sharepoint.com/sites/Setnix/Setnix%20Collab/Forms/AllItems.aspx">
-                   Setnix Collab
+                  Setnix Collab
                 </a>
               </label>
             </dt>
@@ -224,53 +224,65 @@
               <input type="checkbox" id="TSPrintClient" />
               <label for="TSPrintClient">
                 <a target="_blank" href="https://www.terminalworks.com/remote-desktop-printing/downloads">
-                  <img src="./logos/TSPrintLogo.png" alt="TSPrint Logo" width="20"  height="20" /> TSPrint Client (exe)
+                  <img src="./logos/TSPrintLogo.png" alt="TSPrint Logo" width="20" height="20" /> TSPrint Client (exe)
                 </a>
+                <span> | </span>
+                <a class="file" target="" href="C:\ProgramData\Microsoft\Windows\Start Menu\Programs">
+                  Open TSPrint Configuration
+                </a>
+                <button  style="width: auto;" onclick="copyFilePath()">Copy File Path</button>
               </label>
             </dt>
+            
+            <script>
+            function copyFilePath() {
+              const filePath = 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\TerminalWorks\\TSPrint';
+              navigator.clipboard.writeText(filePath);
+            }
+            </script>
+            
             <dt>
               <input type="checkbox" id="bluetoothScannerManual" />
               <label for="bluetoothScannerManual">
                 <a target="_blank" href="./bluetoothScannerManual.pdf">
-                  <img src="./logos/PDFLogo.png" alt="PDF Logo" width="20"  height="20" /> Bluetooth Scanner Manual
+                  <img src="./logos/PDFLogo.png" alt="PDF Logo" width="20" height="20" /> Bluetooth Scanner Manual
                 </a>
               </label>
             </dt>
             <dt>
-              <input type="checkbox" id="updatethis" />
-              <label for="updatethis">
+              <input type="checkbox" id="laptopWallpaper" />
+              <label for="laptopWallpaper">
                 <a target="_blank" href="./16x9 Wallpaper.png">
-                  <img src="./16x9 Wallpaper.png" alt="updatethis" width="20"  height="20" /> Laptop Wallpaper
+                  <img src="./16x9 Wallpaper.png" alt="Laptop Wallpaper" width="20" height="20" /> Laptop Wallpaper
                 </a>
               </label>
             </dt>
-        
             <dt>
-              <input type="checkbox" id="updatethis" />
-              <label for="updatethis">
+              <input type="checkbox" id="tabletWallpaper" />
+              <label for="tabletWallpaper">
                 <a target="_blank" href="./tabletWallpaper.png">
-                  <img src="./tabletWallpaper.png" alt="updatethis" width="20"  height="20" /> Tablet Wallpaper
+                  <img src="./tabletWallpaper.png" alt="Tablet Wallpaper" width="20" height="20" /> Tablet Wallpaper
                 </a>
               </label>
             </dt>
             <dt>
-              <input type="checkbox" id="updatethis" />
-              <label for="updatethis">
+              <input type="checkbox" id="skunkWallpaper" />
+              <label for="skunkWallpaper">
                 <a target="_blank" href="./green_skunk_wallpaper.png">
-                  <img src="./green_skunk_wallpaper.png" alt="skunk" width="20"  height="20" /> Skunk Wallpaper
+                  <img src="./green_skunk_wallpaper.png" alt="Skunk Wallpaper" width="20" height="20" /> Skunk Wallpaper
                 </a>
               </label>
             </dt>
             <dt>
-              <input type="checkbox" id="updatethis" />
-              <label for="updatethis">
+              <input type="checkbox" id="birthdays" />
+              <label for="birthdays">
                 <a target="_blank" href="./birthdayMessage.html">
-                  <img src="./skunk_logo.png" alt="updatethis" width="20"  height="20" /> Birthdays
+                  <img src="./skunk_logo.png" alt="Birthdays" width="20" height="20" /> Birthdays
                 </a>
               </label>
             </dt>
-          </dl>
-        </dt>
+            </dl>
+            
         <dt>
           <h3>Setup Checklist</h3>
           <dl>
