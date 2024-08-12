@@ -124,7 +124,7 @@
 
     <script>
       const people = [
-        { name: "Nathan", email: "Nathan.clark@setnaio.com" },
+        { name: "Nathan Clark", email: "Nathan.clark@setnaio.com" },
         { name: "Aaron Shellie", email: "Aaron@setnaio.com" },
         { name: "Abby Rabin", email: "Abby.Rabin@setnaio.com" },
         { name: "Abhijeet Dey", email: "Abhijeet.Dey@setnaio.com" },
@@ -375,7 +375,7 @@
 
           const isWeekend = document.getElementById("weekend").checked;
           const weekendText = isWeekend
-            ? '<span class="highlight"> this weekend!!</span>'
+            ? '<span class="highlight"> this weekend</span>'
             : "";
 
           const template = document.querySelector(
@@ -387,7 +387,7 @@
             output = `
             Hi everyone,<br><br>
             Please join me in wishing <span class="highlight">${name}</span> a very Happy Birthday today!<br><br>
-            <span class="highlight">${firstName}</span> isn't copied on this email, but I'm sure <span class="highlight">${genderPronoun}</span> would love to have <span class="highlight">${pronoun}</span> inbox flooded with well wishes${weekendText}<br><br>
+            <span class="highlight">${firstName}</span> isn't copied on this email, but I'm sure <span class="highlight">${genderPronoun}</span> would love to have <span class="highlight">${pronoun}</span> inbox flooded with well wishes${weekendText}!<br><br>
             Have a great day!
           `;
           }
