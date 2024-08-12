@@ -340,7 +340,6 @@
       ];
       const nameSelect = document.getElementById("name");
 
-      // Populate the dropdown with names
       people.forEach((person) => {
         const option = document.createElement("option");
         option.value = person.email;
@@ -393,7 +392,6 @@
           `;
           }
 
-          // Generate email list excluding the selected person
           const otherEmails = people
             .filter((person) => person.email !== selectedEmail)
             .map((person) => person.email)
@@ -421,8 +419,8 @@
           copyMessage.style.opacity = "0";
           setTimeout(() => {
             copyMessage.style.display = "none";
-          }, 300); // Hide after fading out
-        }, 1500); // Show for 1.5 seconds before fading out
+          }, 300);
+        }, 1500);
       }
     </script>
   </body>
