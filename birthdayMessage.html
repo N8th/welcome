@@ -25,6 +25,10 @@
         background-color: #2a2a4a;
         border-radius: 5px;
       }
+      .highlight {
+        color: red;
+        font-weight: bold;
+      }
       label,
       input[type="text"],
       input[type="checkbox"] {
@@ -56,25 +60,43 @@
       .template-options label {
         margin-right: 10px;
       }
+      .name-options {
+        margin-bottom: 20px;
+      }
+      .name-options label {
+        margin-right: 10px;
+      }
+      #copyMessage {
+        display: none;
+        color: #e0c060;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: opacity 0.3s ease, height 0.3s ease;
+        height: 20px; /* Fixed height */
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Birthday Wish Generator</h1>
       <form id="birthdayForm">
-        <label for="name">Full Name:</label><br />
-        <input type="text" id="name" name="name" required /><br /><br />
+        <div class="name-options">
+          <label for="name">Select the person whose birthday it is:</label
+          ><br />
+          <select id="name" name="name" required>
+            <!-- Options will be populated by JavaScript -->
+          </select>
+        </div>
+
+        <label for="gender">Select Gender:</label><br />
+        <select id="gender" name="gender" required>
+          <option value="neutral" selected>Neutral</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option></select
+        ><br /><br />
 
         <label for="weekend">Is it a weekend?</label>
         <input type="checkbox" id="weekend" name="weekend" /><br /><br />
-
-        <label for="gender">Gender:</label><br />
-        <input type="checkbox" id="male" name="gender" value="male" />
-        <label for="male">Male</label><br />
-        <input type="checkbox" id="female" name="gender" value="female" />
-        <label for="female">Female</label><br />
-        <input type="checkbox" id="neutral" name="gender" value="neutral" />
-        <label for="neutral">Neutral</label><br /><br />
 
         <div class="template-options">
           <label for="template">Choose a template:</label><br />
@@ -86,98 +108,321 @@
             checked
           />
           <label for="template1">Template 1</label><br />
-          <input
-            type="radio"
-            id="template2"
-            name="template"
-            value="template2"
-          />
-          <label for="template2">Template 2</label><br />
-          <input
-            type="radio"
-            id="template3"
-            name="template"
-            value="template3"
-          />
-          <label for="template3">Template 3</label><br />
         </div>
 
         <input type="submit" value="Generate" />
       </form>
 
-      <div class="output" id="output"></div>
-      <button id="copyButton" onclick="copyToClipboard()">
-        Copy to Clipboard
+      <button id="copyButton" onclick="copyToClipboard()">Copy Message</button>
+      <button id="copyEmailsButton" onclick="copyEmailsToClipboard()">
+        Copy Emails for BCC
       </button>
+      <div id="copyMessage">Copied to clipboard!</div>
+      <div class="output" id="output"></div>
+      <div class="output" id="emailOutput"></div>
     </div>
 
     <script>
+      const people = [
+        { name: "Nathan", email: "Nathan.clark@setnaio.com" },
+        { name: "Aaron Shellie", email: "Aaron@setnaio.com" },
+        { name: "Abby Rabin", email: "Abby.Rabin@setnaio.com" },
+        { name: "Abhijeet Dey", email: "Abhijeet.Dey@setnaio.com" },
+        { name: "Adam Massello", email: "Adam.Massello@setnaio.com" },
+        { name: "Adam Norenberg", email: "Adam.Norenberg@setnaio.com" },
+        { name: "Addison Ortiz", email: "Addison.Ortiz@setnaio.com" },
+        { name: "Adlai Suguitan", email: "Adlai.Suguitan@setnaio.com" },
+        { name: "Adnan Torlakovic", email: "Adnan.Torlakovic@setnaio.com" },
+        { name: "Adrian Ramirez", email: "Adrian.Ramirez@setnaio.com" },
+        { name: "Aivaras Staknys", email: "Aivaras.Staknys@setnaio.com" },
+        { name: "Alex Miranda", email: "Alex.Miranda@setnaio.com" },
+        { name: "Alex Nelson", email: "Alex.Nelson@setnaio.com" },
+        { name: "Alla Perkovskaia", email: "Alla.Perkovskaia@setnaio.com" },
+        { name: "Alon Keselbrener", email: "Alon.brener@setnaio.com" },
+        { name: "Alona Beskluba", email: "Alona.Beskluba@setnaio.com" },
+        { name: "Amalie Moeller", email: "Amalie.Moeller@setnaio.com" },
+        { name: "Ana Vásquez", email: "Ana.vasquez@setnaio.com" },
+        { name: "Andre Baran", email: "Andre.Baran@setnaio.com" },
+        { name: "Andrei Chirosca", email: "Andrei.Chirosca@setnaio.com" },
+        { name: "Andrew Mital", email: "Andrew.Mital@setnaio.com" },
+        { name: "Anna Bryzgalova", email: "Anna.Bryzgalova@setnaio.com" },
+        { name: "Ans Butt", email: "Ans.Butt@setnaio.com" },
+        { name: "Anthony Caputo", email: "Anthony.Caputo@setnaio.com" },
+        { name: "Antonio Miller", email: "Antonio.Miller@setnaio.com" },
+        { name: "Arsalan Rashid", email: "Arsalan.Rashid@setnaio.com" },
+        { name: "Asher Laurens", email: "Asher@setnaio.com" },
+        { name: "Aybars", email: "aybars@setnaio.com" },
+        { name: "Blake Frankland", email: "Blake.Frankland@setnaio.com" },
+        { name: "Blayne Agrusso", email: "Blayne.Agrusso@setnaio.com" },
+        { name: "Bohumil Bedrich", email: "Bohumil.Bedrich@setnaio.com" },
+        { name: "Brad Wallace", email: "Brad.Wallace@setnaio.com" },
+        { name: "Brenda Roth", email: "Brenda.Roth@setnaio.com" },
+        { name: "Brendan Butcher", email: "Brendan.Butcher@setnaio.com" },
+        { name: "Brian Bonamarte", email: "Brian.Bonamarte@setnaio.com" },
+        { name: "Byron Arnold", email: "Byron.Arnold@setnaio.com" },
+        { name: "Calib Weeden", email: "calib.weeden@setnaio.com" },
+        { name: "Cameron Golman", email: "Cam@setnaio.com" },
+        { name: "Carson Hagler", email: "Carson.Hagler@setnaio.com" },
+        { name: "Charles Sutton", email: "Charles.Sutton@setnaio.com" },
+        { name: "Chris Ricely", email: "Chris.Ricely@setnaio.com" },
+        { name: "Chris Schmahl", email: "Chris.Schmahl@setnaio.com" },
+        { name: "Christian DeRose", email: "Christian.DeRose@setnaio.com" },
+        { name: "Christina Joensson", email: "Christina.Joensson@setnaio.com" },
+        { name: "Cristobal Cardiel", email: "cristobal.cardiel@setnaio.com" },
+        { name: "Dannyel Contreras", email: "Dannyel.Contreras@setnaio.com" },
+        { name: "David Chaimovitz", email: "david@setnaio.com" },
+        { name: "David Mendelsohn", email: "David.Mendelsohn@setnaio.com" },
+        { name: "Davin Bermudes", email: "Davin.Bermudes@setnaio.com" },
+        { name: "Davis Walle", email: "Davis.Walle@setnaio.com" },
+        { name: "Dawn Gamble", email: "Dawn.Gamble@setnaio.com" },
+        { name: "Devin Liddy", email: "Devin.Liddy@setnaio.com" },
+        { name: "Doug Roth", email: "Doug.Roth@setnaio.com" },
+        { name: "Dylan Mccullough", email: "Dylan.Mccullough@setnaio.com" },
+        { name: "Edwin Ong", email: "Edwin.Ong@setnaio.com" },
+        { name: "Elvira Alvillar", email: "Elvira.Alvillar@setnaio.com" },
+        { name: "Emily Maynard", email: "Emily.Maynard@setnaio.com" },
+        { name: "Eric Becerra", email: "Eric.Becerra@setnaio.com" },
+        { name: "Eric Novak", email: "Eric.Novak@setnaio.com" },
+        { name: "Eric Tamayo", email: "Eric.Tamayo@setnaio.com" },
+        { name: "Etienne Gombeaud", email: "Etienne@setnaio.com" },
+        { name: "Eudin Medrano", email: "Eudin.Medrano@setnaio.com" },
+        { name: "Fernando Banuelos", email: "Fernando.Banuelos@setnaio.com" },
+        { name: "Gabriel Yousif", email: "Gabriel.Yousif@setnaio.com" },
+        { name: "Gavin Gallogly", email: "Gavin.Gallogly@setnaio.com" },
+        { name: "Giavanni Quintana", email: "Giavanni.Quintana@setnaio.com" },
+        { name: "Grae Gaginer", email: "Grae.Gaginer@setnaio.com" },
+        { name: "Graham Clark", email: "Graham.Clark@setnaio.com" },
+        { name: "Hector Negrete", email: "Hector.Negrete@setnaio.com" },
+        { name: "Hunter Edens", email: "Hunter.Edens@setnaio.com" },
+        { name: "Ian Baker", email: "Ian.Baker@setnaio.com" },
+        { name: "Isaac Medina", email: "Isaac.Medina@setnaio.com" },
+        { name: "Jacob Butler", email: "Jacob.Butler@setnaio.com" },
+        { name: "James Hernandez", email: "James.Hernandez@setnaio.com" },
+        { name: "James Roché", email: "james@setnaio.com" },
+        { name: "Jamie Fossenkemper", email: "Jamie.Fossenkemper@setnaio.com" },
+        { name: "Janelle Weber", email: "Janelle.Weber@setnaio.com" },
+        { name: "Jarrett Goldman", email: "Jarrett.Goldman@setnaio.com" },
+        { name: "Jason Kozin", email: "jasonk@imperialgp.com" },
+        { name: "Jatra Chea", email: "jatra.chea@setnaio.com" },
+        { name: "Jenea Roorda", email: "jenea.roorda@setnaio.com" },
+        { name: "Jensen Sassone", email: "Jensen.Sassone@setnaio.com" },
+        { name: "Jeremy Young", email: "Jeremy.Young@setnaio.com" },
+        { name: "Jessica Quizhpe", email: "Jessica.Quizhpe@setnaio.com" },
+        { name: "Jesus Quintana", email: "Jesus.Quintana@setnaio.com" },
+        { name: "Joe Paalman", email: "Joe.Paalman@setnaio.com" },
+        { name: "John Iaquinta", email: "John.Iaquinta@setnaio.com" },
+        { name: "John Tryfonopoulos", email: "John.Tryfonopoulos@setnaio.com" },
+        { name: "Jonathan Munoz", email: "Jonathan.Munoz@setnaio.com" },
+        { name: "Jordan Goldberg", email: "Jordan.Goldberg@setnaio.com" },
+        { name: "Jordan Greenberg", email: "Jordan.Greenberg@setnaio.com" },
+        { name: "Jordan Simmonett", email: "Jordan.Simmonett@setnaio.com" },
+        { name: "Jose Barajas", email: "Jose.Barajas@setnaio.com" },
+        { name: "Jose Mayboca", email: "Jose.mayboca@setnaio.com" },
+        { name: "Joseph Laxner", email: "Joseph.Laxner@setnaio.com" },
+        { name: "Joseph LeGrande", email: "joseph@setnaio.com" },
+        { name: "Joseph Peterson", email: "Joseph.Peterson@setnaio.com" },
+        { name: "Justin McDaniels", email: "Justin.McDaniels@setnaio.com" },
+        { name: "Justin Thompson", email: "Justin.Thompson@setnaio.com" },
+        { name: "Katie Marie", email: "Katie.Marie@setnaio.com" },
+        {
+          name: "Kealan Witherington",
+          email: "kealan.witherington@setnaio.com",
+        },
+        { name: "Keith Gonzales", email: "Keith.Gonzales@setnaio.com" },
+        { name: "Keith Rouse", email: "Keith.Rouse@setnaio.com" },
+        {
+          name: "Kelby Witherington",
+          email: "Kelby.Witherington@setnaio.com",
+        },
+        {
+          name: "Kingsley",
+          email: "Kingsley.Boateng@setnaio.com",
+        },
+        { name: "Kuldeep Harrad", email: "Kuldeep.Harrad@setnaio.com" },
+        { name: "Kyrah Rhone", email: "Kyrah.Rhone@setnaio.com" },
+        { name: "Lance Greer", email: "Lance.Greer@setnaio.com" },
+        { name: "Lasse Knofler", email: "Lasse.Knofler@setnaio.com" },
+        { name: "Lloyd Davis", email: "Lloyd.Davis@setnaio.com" },
+        { name: "Louis Rillo", email: "Louis.Rillo@setnaio.com" },
+        { name: "Lubomir Lasak", email: "Lubomir.Lasak@setnaio.com" },
+        { name: "Luke Muscarello", email: "luke.muscarello@setnaio.com" },
+        { name: "Luke Vincent", email: "Luke.Vincent@setnaio.com" },
+        { name: "Mac Paszkowski", email: "Mac.Paszkowski@setnaio.com" },
+        { name: "Marc Vestergaard", email: "MarcV@setnaio.com" },
+        { name: "Marcos Santos", email: "marcos.santos@setnaio.com" },
+        {
+          name: "Marcus Nord Christensen",
+          email: "Marcus.Christensen@setnaio.com",
+        },
+        { name: "Mark Heitkotter", email: "Mark.Heitkotter@setnaio.com" },
+        { name: "Marketa Huskova", email: "Marketa.Huskova@setnaio.com" },
+        { name: "Martynas Staknys", email: "Martynas@setnaio.com" },
+        { name: "Mateusz Ziemba", email: "Mat@setnaio.com" },
+        { name: "Matt Brown", email: "matt@setnaio.com" },
+        { name: "Matt Busse", email: "Matt.Busse@setnaio.com" },
+        { name: "Matt Felan", email: "Matt.Felan@setnaio.com" },
+        { name: "Matt Markiewicz", email: "matt.markiewicz@setnaio.com" },
+        { name: "Michael Bednar", email: "Michael.Bednar@setnaio.com" },
+        { name: "Michael Coughlin", email: "michael@setnaio.com" },
+        { name: "Michael Coughlin Sr.", email: "senior@setnaio.com" },
+        { name: "Michael Pawlowski", email: "Michael.Pawlowski@setnaio.com" },
+        {
+          name: "Michael Shofner",
+          email: "michaelshofner@setnaio.com",
+        },
+        { name: "Miguel Castro", email: "Miguel.Castro@setnaio.com" },
+        { name: "Miguel Guerrero", email: "Miguel.Guerrero@setnaio.com" },
+        { name: "Mike Aby", email: "Mike.Aby@setnaio.com" },
+        { name: "Miranda Aby", email: "Miranda.Aby@setnaio.com" },
+        { name: "Monica Najjar", email: "Monica.Najjar@setnaio.com" },
+        { name: "Nate Ellingson", email: "Nate.Ellingson@setnaio.com" },
+        { name: "Nate Weber", email: "Nate.Weber@setnaio.com" },
+        { name: "Nathan Clark", email: "Nathan.Clark@setnaio.com" },
+        { name: "Niall Walsh", email: "Niall.Walsh@setnaio.com" },
+        { name: "Nichlas Svenson", email: "Nichlas.Svenson@setnaio.com" },
+        { name: "Nick Barnhart", email: "Nick.Barnhart@setnaio.com" },
+        { name: "Nick Brown", email: "Nick.brown@setnaio.com" },
+        { name: "Nick O'Shea", email: "nick@setnaio.com" },
+        { name: "Nick Wellman", email: "Nick.Wellman@setnaio.com" },
+        { name: "Noah Kim", email: "Noah.Kim@setnaio.com" },
+        { name: "Oliver Haar", email: "Oliver.Haar@setnaio.com" },
+        { name: "Onur Gokce", email: "Onur.Gokce@setnaio.com" },
+        { name: "Paul Campos", email: "Paul.Campos@setnaio.com" },
+        { name: "Paul Hasson", email: "paul@setnaio.com" },
+        { name: "Pedro Briceno", email: "Pedro.Briceno@setnaio.com" },
+        { name: "Pedro Briceno Jr.", email: "Briceno.Jr@setnaio.com" },
+        { name: "Ramses Diaz", email: "Ramses.Diaz@setnaio.com" },
+        { name: "Rhys Davis", email: "Rhys.Davis@setnaio.com" },
+        { name: "Rich DeHaan", email: "Rich.DeHaan@setnaio.com" },
+        { name: "Rishesh Sharma", email: "Rishesh.Sharma@setnaio.com" },
+        { name: "Robert James", email: "robert@setnaio.com" },
+        { name: "Robert Maynard", email: "Robert.Maynard@setnaio.com" },
+        { name: "Robert Musante", email: "Robert.Musante@setnaio.com" },
+        { name: "Roberto Herrera", email: "Roberto.Herrera@setnaio.com" },
+        { name: "Roberto Perez", email: "Roberto.perez@setnaio.com" },
+        { name: "Ronnie Looney", email: "Ronnie.Looney@setnaio.com" },
+        { name: "Roxana Chirosca", email: "Roxana.Chirosca@setnaio.com" },
+        { name: "Ryan Turner", email: "Ryan.Turner@setnaio.com" },
+        { name: "Sam Parks", email: "Sam.Parks@setnaio.com" },
+        { name: "Sarah Klein", email: "Sarah.Klein@setnaio.com" },
+        { name: "Scott Loza", email: "Scott.Loza@setnaio.com" },
+        { name: "Shawn Cassara", email: "Shawn.Cassara@setnaio.com" },
+        { name: "Shay Roche", email: "Shay.Roche@setnaio.com" },
+        { name: "Shelvin Munkers", email: "Shelvin.Munkers@setnaio.com" },
+        { name: "Sonya Beshlishka", email: "Sonya@setnaio.com" },
+        { name: "Sreejith Sreekumar", email: "sreejith@setnaio.com" },
+        { name: "Stefan Shemaitis", email: "Stefan.Shemaitis@setnaio.com" },
+        { name: "Stephanie Rybandt", email: "Stephanie.Rybandt@setnaio.com" },
+        { name: "Steven Cannestra", email: "Steven.Cannestra@setnaio.com" },
+        { name: "Steven White", email: "Steven.White@setnaio.com" },
+        { name: "Sune Kjeldsen", email: "Sune.Kjeldsen@setnaio.com" },
+        { name: "Taylor Champer", email: "Taylor.Champer@setnaio.com" },
+        { name: "Teddy Molinari", email: "Teddy.Molinari@setnaio.com" },
+        { name: "Tigi Bucaro", email: "Tigi@setnaio.com" },
+        { name: "Tilmeka Robbins", email: "Tilmeka.Robbins@setnaio.com" },
+        { name: "Tobiasz Ziemba", email: "Tobiasz.Ziemba@setnaio.com" },
+        { name: "Tom Boulcott", email: "tom@setnaio.com" },
+        { name: "Tommy DeGarmo", email: "Tommy.DeGarmo@setnaio.com" },
+        { name: "Trent Peach", email: "Trent.Peach@setnaio.com" },
+        { name: "Trenton Williams", email: "Trenton.Williams@setnaio.com" },
+        { name: "Trey Koenig", email: "trey.koenig@setnaio.com" },
+        { name: "Trinidad Gonzalez", email: "Trinidad.Gonzalez@setnaio.com" },
+        { name: "Tyler Turner", email: "Tyler.Turner@setnaio.com" },
+        { name: "Venu Gopal", email: "Venu.Gopal@setnaio.com" },
+        { name: "Veronika Volkova", email: "Veronika.Volkova@setnaio.com" },
+        { name: "Viktor Grecukas", email: "Viktor.Grecukas@setnaio.com" },
+        { name: "Vinnie Beltrano", email: "Vinnie.Beltrano@setnaio.com" },
+        { name: "Vinnie Huerta", email: "Vinnie.Huerta@setnaio.com" },
+        { name: "Weston Flyte", email: "Weston.Flyte@setnaio.com" },
+        { name: "Wilfredo Lebron", email: "Wilfredo.lebron@setnaio.com" },
+        { name: "Will Bond", email: "Will.Bond@setnaio.com" },
+        { name: "William Rogers", email: "william.rogers@setnaio.com" },
+      ];
+      const nameSelect = document.getElementById("name");
+
+      // Populate the dropdown with names
+      people.forEach((person) => {
+        const option = document.createElement("option");
+        option.value = person.email;
+        option.textContent = person.name;
+        nameSelect.appendChild(option);
+      });
+
       document
         .getElementById("birthdayForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
 
-          var name = document.getElementById("name").value;
-          var firstName = name.split(" ")[0];
-          var isWeekend = document.getElementById("weekend").checked;
-          var weekendText = isWeekend ? "this weekend" : "";
-          var genderElements = document.querySelectorAll(
-            'input[name="gender"]'
+          const selectedEmail = nameSelect.value;
+          const selectedPerson = people.find(
+            (person) => person.email === selectedEmail
           );
-          var gender = "they";
-          var pronoun = "their";
+          const name = selectedPerson.name;
+          const firstName = name.split(" ")[0];
 
-          genderElements.forEach(function (element) {
-            if (element.checked) {
-              if (element.value === "male") {
-                gender = "he";
-                pronoun = "his";
-              } else if (element.value === "female") {
-                gender = "she";
-                pronoun = "her";
-              }
-            }
-          });
+          const gender = document.getElementById("gender").value;
+          let genderPronoun, pronoun;
 
-          var template = document.querySelector(
+          if (gender === "male") {
+            genderPronoun = "he";
+            pronoun = "his";
+          } else if (gender === "female") {
+            genderPronoun = "she";
+            pronoun = "her";
+          } else {
+            genderPronoun = "they";
+            pronoun = "their";
+          }
+
+          const isWeekend = document.getElementById("weekend").checked;
+          const weekendText = isWeekend
+            ? '<span class="highlight"> this weekend!!</span>'
+            : "";
+
+          const template = document.querySelector(
             'input[name="template"]:checked'
           ).value;
-          var output = "";
+          let output = "";
 
           if (template === "template1") {
             output = `
-              Hi everyone,<br><br>
-              Please join me in wishing ${name} a very Happy Birthday today!<br><br>
-              ${firstName} isn't copied on this email, but I'm sure ${gender} would love to have ${pronoun} inbox flooded with well wishes ${weekendText}!<br><br>
-              Have a great day!
-            `;
-          } else if (template === "template2") {
-            output = `
-              Hello Team,<br><br>
-              It's ${name}'s birthday today! Let's take a moment to send ${pronoun} our best wishes. Although ${firstName} isn't included in this email, ${gender} will certainly appreciate the surprise messages ${weekendText}.<br><br>
-              Cheers!
-            `;
-          } else if (template === "template3") {
-            output = `
-              Greetings everyone,<br><br>
-              Today is a special day as we celebrate ${name}'s birthday! ${firstName} isn't on this email, so let's make ${pronoun} day by filling ${pronoun} inbox with warm birthday greetings ${weekendText}.<br><br>
-              Best regards,
-            `;
+            Hi everyone,<br><br>
+            Please join me in wishing <span class="highlight">${name}</span> a very Happy Birthday today!<br><br>
+            <span class="highlight">${firstName}</span> isn't copied on this email, but I'm sure <span class="highlight">${genderPronoun}</span> would love to have <span class="highlight">${pronoun}</span> inbox flooded with well wishes${weekendText}<br><br>
+            Have a great day!
+          `;
           }
 
+          // Generate email list excluding the selected person
+          const otherEmails = people
+            .filter((person) => person.email !== selectedEmail)
+            .map((person) => person.email)
+            .join("; ");
+
           document.getElementById("output").innerHTML = output;
+          document.getElementById("emailOutput").textContent = otherEmails;
         });
 
       function copyToClipboard() {
-        var outputText = document.getElementById("output").innerText;
-        navigator.clipboard.writeText(outputText).then(
-          function () {
-            alert("Copied to clipboard!");
-          },
-          function () {
-            alert("Failed to copy text to clipboard.");
-          }
-        );
+        const outputText = document.getElementById("output").innerText;
+        navigator.clipboard.writeText(outputText).then(showCopyMessage);
+      }
+
+      function copyEmailsToClipboard() {
+        const emailText = document.getElementById("emailOutput").innerText;
+        navigator.clipboard.writeText(emailText).then(showCopyMessage);
+      }
+
+      function showCopyMessage() {
+        const copyMessage = document.getElementById("copyMessage");
+        copyMessage.style.display = "block";
+        copyMessage.style.opacity = "1";
+        setTimeout(() => {
+          copyMessage.style.opacity = "0";
+          setTimeout(() => {
+            copyMessage.style.display = "none";
+          }, 300); // Hide after fading out
+        }, 1500); // Show for 1.5 seconds before fading out
       }
     </script>
   </body>

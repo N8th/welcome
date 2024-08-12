@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Wish Template</title>
+    <style>
+      body {
+        background-color: rgb(30, 26, 52);
+        font-family: Arial, sans-serif;
+        color: white;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #202040;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #2a2a4a;
+        border-radius: 5px;
+      }
+      label,
+      input[type="text"],
+      input[type="checkbox"] {
+        margin-bottom: 10px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+      }
+      input[type="submit"],
+      button {
+        background-color: rgb(120, 90, 175);
+        color: #202040;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover,
+      button:hover {
+        background-color: #e0c060;
+      }
+      .template-options {
+        margin: 10px 0;
+      }
+      .template-options label {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Birthday Wish Generator</h1>
+      <form id="birthdayForm">
+        <label for="name">Full Name:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="weekend">Is it a weekend?</label>
+        <input type="checkbox" id="weekend" name="weekend" /><br /><br />
+
+        <label for="gender">Gender:</label><br />
+        <input type="checkbox" id="male" name="gender" value="male" />
+        <label for="male">Male</label><br />
+        <input type="checkbox" id="female" name="gender" value="female" />
+        <label for="female">Female</label><br />
+        <input type="checkbox" id="neutral" name="gender" value="neutral" />
+        <label for="neutral">Neutral</label><br /><br />
+
+        <div class="template-options">
+          <label for="template">Choose a template:</label><br />
+          <input
+            type="radio"
+            id="template1"
+            name="template"
+            value="template1"
+            checked
+          />
+          <label for="template1">Template 1</label><br />
+          <input
+            type="radio"
+            id="template2"
+            name="template"
+            value="template2"
+          />
+          <label for="template2">Template 2</label><br />
+          <input
+            type="radio"
+            id="template3"
+            name="template"
+            value="template3"
+          />
+          <label for="template3">Template 3</label><br />
+        </div>
+
+        <input type="submit" value="Generate" />
+      </form>
+
+      <div class="output" id="output"></div>
+      <button id="copyButton" onclick="copyToClipboard()">
+        Copy to Clipboard
+      </button>
+    </div>
+
+    <script>
+      document
+        .getElementById("birthdayForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var name = document.getElementById("name").value;
+          var firstName = name.split(" ")[0];
+          var isWeekend = document.getElementById("weekend").checked;
+          var weekendText = isWeekend ? "this weekend" : "";
+          var genderElements = document.querySelectorAll(
+            'input[name="gender"]'
+          );
+          var gender = "they";
+          var pronoun = "their";
+
+          genderElements.forEach(function (element) {
+            if (element.checked) {
+              if (element.value === "male") {
+                gender = "he";
+                pronoun = "his";
+              } else if (element.value === "female") {
+                gender = "she";
+                pronoun = "her";
+              }
+            }
+          });
+
+          var template = document.querySelector(
+            'input[name="template"]:checked'
+          ).value;
+          var output = "";
+
+          if (template === "template1") {
+            output = `
+              Hi everyone,<br><br>
+              Please join me in wishing ${name} a very Happy Birthday today!<br><br>
+              ${firstName} isn't copied on this email, but I'm sure ${gender} would love to have ${pronoun} inbox flooded with well wishes ${weekendText}!<br><br>
+              Have a great day!
+            `;
+          } else if (template === "template2") {
+            output = `
+              Hello Team,<br><br>
+              It's ${name}'s birthday today! Let's take a moment to send ${pronoun} our best wishes. Although ${firstName} isn't included in this email, ${gender} will certainly appreciate the surprise messages ${weekendText}.<br><br>
+              Cheers!
+            `;
+          } else if (template === "template3") {
+            output = `
+              Greetings everyone,<br><br>
+              Today is a special day as we celebrate ${name}'s birthday! ${firstName} isn't on this email, so let's make ${pronoun} day by filling ${pronoun} inbox with warm birthday greetings ${weekendText}.<br><br>
+              Best regards,
+            `;
+          }
+
+          document.getElementById("output").innerHTML = output;
+        });
+
+      function copyToClipboard() {
+        var outputText = document.getElementById("output").innerText;
+        navigator.clipboard.writeText(outputText).then(
+          function () {
+            alert("Copied to clipboard!");
+          },
+          function () {
+            alert("Failed to copy text to clipboard.");
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
