@@ -39,6 +39,7 @@
         padding: 10px;
         border-radius: 5px;
         border: none;
+        margin: auto;
       }
       input[type="submit"],
       button {
@@ -49,6 +50,7 @@
         border-radius: 5px;
         border: none;
         cursor: pointer;
+        margin: 0.5rem;
       }
       input[type="submit"]:hover,
       button:hover {
@@ -122,16 +124,41 @@
           <label for="template1">Template 1</label><br />
         </div>
 
-        <input type="submit" value="Generate" />
+        <div style="display: flex">
+          <div style="text-align: center; margin: 0 auto; width: 20%">
+            <input type="submit" value="Generate" />
+          </div>
+        </div>
       </form>
+      <div style="display: flex">
+        <div style="text-align: center; margin: 0 auto; width: 20%">
+          <button id="copyButton" onclick="copyToClipboard()">
+            Copy Message
+          </button>
+        </div>
 
-      <button id="copyButton" onclick="copyToClipboard()">Copy Message</button>
-      <button id="copyEmailsButton" onclick="copyEmailsToClipboard()">
-        Copy Emails for BCC
-      </button>
+        <div style="text-align: center; margin: 0 auto; width: 20%">
+          <button id="copyEmailsButton" onclick="copyEmailsToClipboard()">
+            Copy Emails for BCC
+          </button>
+        </div>
+      </div>
+
       <div id="copyMessage">Copied to clipboard!</div>
       <div class="output" id="output"></div>
-      <input type="text" id="searchEmail" placeholder="Search Emails..." />
+      <div style="text-align: center">
+        <input
+          style="
+            text-align: center;
+            width: 100%;
+            padding: 5px 0;
+            margin-top: 1rem;
+          "
+          type="text"
+          id="searchEmail"
+          placeholder="Search Emails..."
+        />
+      </div>
       <div class="output" id="emailOutput"></div>
     </div>
 
