@@ -74,6 +74,18 @@
         transition: opacity 0.3s ease, height 0.3s ease;
         height: 20px; /* Fixed height */
       }
+      .email-item {
+        display: inline-block;
+        margin: 5px;
+        padding: 5px;
+        background-color: #444;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .email-item.removed {
+        text-decoration: line-through;
+        background-color: #ff8080;
+      }
     </style>
   </head>
   <body>
@@ -119,6 +131,7 @@
       </button>
       <div id="copyMessage">Copied to clipboard!</div>
       <div class="output" id="output"></div>
+      <input type="text" id="searchEmail" placeholder="Search Emails..." />
       <div class="output" id="emailOutput"></div>
     </div>
 
@@ -277,7 +290,6 @@
         { name: "Monica Najjar", email: "Monica.Najjar@setnaio.com" },
         { name: "Nate Ellingson", email: "Nate.Ellingson@setnaio.com" },
         { name: "Nate Weber", email: "Nate.Weber@setnaio.com" },
-        { name: "Nathan Clark", email: "Nathan.Clark@setnaio.com" },
         { name: "Niall Walsh", email: "Niall.Walsh@setnaio.com" },
         { name: "Nichlas Svenson", email: "Nichlas.Svenson@setnaio.com" },
         { name: "Nick Barnhart", email: "Nick.Barnhart@setnaio.com" },
@@ -339,6 +351,8 @@
         { name: "William Rogers", email: "william.rogers@setnaio.com" },
       ];
       const nameSelect = document.getElementById("name");
+      const emailOutput = document.getElementById("emailOutput");
+      const searchEmail = document.getElementById("searchEmail");
 
       people.forEach((person) => {
         const option = document.createElement("option");
@@ -392,14 +406,41 @@
           `;
           }
 
-          const otherEmails = people
-            .filter((person) => person.email !== selectedEmail)
-            .map((person) => person.email)
-            .join("; ");
-
           document.getElementById("output").innerHTML = output;
-          document.getElementById("emailOutput").textContent = otherEmails;
+
+          displayEmails(
+            people.filter((person) => person.email !== selectedEmail)
+          );
         });
+
+      function displayEmails(filteredPeople) {
+        emailOutput.innerHTML = "";
+
+        filteredPeople.forEach((person) => {
+          const emailItem = document.createElement("div");
+          emailItem.classList.add("email-item");
+          emailItem.textContent = person.email;
+          emailItem.onclick = () => toggleEmail(emailItem);
+          emailOutput.appendChild(emailItem);
+        });
+      }
+
+      function toggleEmail(emailItem) {
+        emailItem.classList.toggle("removed");
+      }
+
+      searchEmail.addEventListener("input", function () {
+        const query = searchEmail.value.toLowerCase();
+        const emailItems = emailOutput.querySelectorAll(".email-item");
+
+        emailItems.forEach((item) => {
+          if (item.textContent.toLowerCase().includes(query)) {
+            item.style.display = "inline-block";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
 
       function copyToClipboard() {
         const outputText = document.getElementById("output").innerText;
@@ -407,8 +448,14 @@
       }
 
       function copyEmailsToClipboard() {
-        const emailText = document.getElementById("emailOutput").innerText;
-        navigator.clipboard.writeText(emailText).then(showCopyMessage);
+        const emailItems = emailOutput.querySelectorAll(
+          ".email-item:not(.removed)"
+        );
+        const emails = Array.from(emailItems)
+          .map((item) => item.textContent)
+          .join("; ");
+
+        navigator.clipboard.writeText(emails).then(showCopyMessage);
       }
 
       function showCopyMessage() {
