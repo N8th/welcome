@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const users = [{}];
+      const distroGroups = [
+        { display: "/22 Close", emailAddress: "922Close@imperialgp.com" },
+        { display: "Accessories", emailAddress: "Accessories@setnaio.com" },
+        {
+          display: "Accounting Brain",
+          emailAddress: "AccountingBrain@imperialgp.com",
+        },
+        {
+          display: "All Company",
+          l: "AllCompany.2463499.emspvbet@imperialgp.com",
+        },
+        { display: "AMM", emailAddress: "AMM@imperialgp.com" },
+        { display: "AMM DAILY", emailAddress: "AMMDAILY@imperialgp.com" },
+        { display: "Analytical", emailAddress: "Analytical@setnaio.com" },
+        { display: "ARIZONA", emailAddress: "ArizonaAll@setnaio.com" },
+        { display: "Assets", emailAddress: "Assets@setnaio.com" },
+        { display: "AvSight Demo", emailAddress: "AvSightDemo@imperialgp.com" },
+        {
+          display: "AvSight Production",
+          l: "AvSightProduction@imperialgp.com",
+        },
+        {
+          display: "BEN SINGER FORWARDED MAIL",
+          l: "Brian.Singer@imperialgp.com",
+        },
+        { display: "Blue Angels", emailAddress: "BlueAngels@setnaio.com" },
+        { display: "BOEING", emailAddress: "BOEING@setnaio.com" },
+        { display: "CALM", emailAddress: "CALM@setnaio.com" },
+        { display: "CALM Dev", emailAddress: "CALMDev@imperialgp.com" },
+        { display: "Caxton Court", emailAddress: "Caxton@setnaio.com" },
+        { display: "COLLATERAL", emailAddress: "COLLATERAL@imperialgp.com" },
+        {
+          display: "Compliance Approval",
+          emailAddress: "ComplianceApproval@setnaio.com",
+        },
+        { display: "COST UPDATES", emailAddress: "Cost.Updates@setnaio.com" },
+        {
+          display: "CRMA / Reporting",
+          emailAddress: "CRMAReporting@imperialgp.com",
+        },
+        { display: "CUT RO", emailAddress: "CUT@setnaio.com" },
+        {
+          display: "Dev Holding Pattern",
+          l: "DevHoldingPattern@imperialgp.com",
+        },
+        { display: "DHL PBH", emailAddress: "DHL@setnaio.com" },
+        { display: "Dubai Devils", emailAddress: "UAE@setnaio.com" },
+        { display: "File Dump", emailAddress: "FileDump@imperialgp.com" },
+        { display: "Freight", emailAddress: "freight@setnaio.com" },
+        {
+          display: "Front Range Excursions",
+          l: "FrontRangeExcursions@imperialgp.com",
+        },
+        { display: "Heston Ai Loader", emailAddress: "Hestonai@setnaio.com" },
+        { display: "Heston CPL Program", emailAddress: "HCPL@setnaio.com" },
+        { display: "HQ", emailAddress: "HQ@setnaio.com" },
+        { display: "HQ Bullpen", emailAddress: "HQ.Bullpen@setnaio.com" },
+        { display: "IG BACKUP", emailAddress: "IGBACKUP@imperialgp.com" },
+        {
+          display: "IG Process Improvement Team",
+          l: "IGProcessImprovementTeam@imperialgp.com",
+        },
+        {
+          display: "Imperial Commercial",
+          emailAddress: "commercial@imperialgp.com",
+        },
+        {
+          display: "Imperial Group",
+          emailAddress: "imperialgroup@imperialgp.com",
+        },
+        {
+          display: "Imperial Group",
+          emailAddress: "ImperialGP@imperialgp.com",
+        },
+        {
+          display: "Imperial Select",
+          emailAddress: "ImperialSelect@imperialgp.com",
+        },
+        {
+          display: "Indiana Harbor",
+          emailAddress: "IndianaHarbor@imperialgp.com",
+        },
+        { display: "Inspection", emailAddress: "Inspection@setnaio.com" },
+        { display: "Inventory", emailAddress: "Inventory@setnaio.com" },
+        { display: "Investor Grp", emailAddress: "investorgrp@imperialgp.com" },
+        {
+          display: "Live Mining Operation",
+          l: "LiveMiningOperation@imperialgp.com",
+        },
+        { display: "Locatory", emailAddress: "locatory@setnaio.com" },
+        { display: "MC", emailAddress: "MC@imperialgp.com" },
+        {
+          display: "MC/SK Private",
+          emailAddress: "MCSKPrivate@imperialgp.com",
+        },
+        { display: "Michael", emailAddress: "michael@imperialgp.com" },
+        { display: "Military", emailAddress: "military@imperialgp.com" },
+        { display: "Military Setna iO", emailAddress: "military@setnaio.com" },
+        { display: "MSN 398 RT'S", emailAddress: "MSN398RT'S@imperialgp.com" },
+        {
+          display: "name saves",
+          emailAddress: "SetnaiOPrivate@imperialgp.com",
+        },
+        {
+          display: "Outlook Customer Manager",
+          l: "AllSalesTeam-c036c9b0-d80c-423b-afed-8642ce2d6076@imperialgp.com",
+        },
+        { display: "PARTY", emailAddress: "PARTY@imperialgp.com" },
+        { display: "PAVA", emailAddress: "PAVA@imperialgp.com" },
+        {
+          display: "PBH Purchasing",
+          emailAddress: "Purchasing.PBH@setnaio.com",
+        },
+        {
+          display: "Power Apps Data",
+          emailAddress: "AccountHolds@imperialgp.com",
+        },
+        {
+          display: "Prepaid SO Release",
+          emailAddress: "Prepaid.SO.Release@setnaio.com",
+        },
+        { display: "Procurement", emailAddress: "Procurement@setnaio.com" },
+        {
+          display: "Purchasing Discussion Group",
+          emailAddress: "IsThisABuy@setnaio.com",
+        },
+        {
+          display: "Quality Management Dev",
+          l: "QualityManagementDev@imperialgp.com",
+        },
+        { display: "RECEIVING", emailAddress: "HQ.Receiving@setnaio.com" },
+        { display: "Scan's", emailAddress: "scan@imperialgp.com" },
+        { display: "Setna iO", emailAddress: "DevSite2@imperialgp.com" },
+        { display: "Setna iO - All", emailAddress: "All@setnaio.com" },
+        {
+          display: "Setna iO - America Sales",
+          emailAddress: "AmericaSales@setnaio.com",
+        },
+        {
+          display: "Setna iO - Europe Sales",
+          emailAddress: "EuropeSales@setnaio.com",
+        },
+        {
+          display: "Setna iO - Global Sales",
+          emailAddress: "GlobalSales@setnaio.com",
+        },
+        {
+          display: "Setna iO Operations - Arizona",
+          l: "AZ.Operations@setnaio.com",
+        },
+        {
+          display: "Setna iO Operations – UK",
+          emailAddress: "UK.Operations@setnaio.com",
+        },
+        { display: "Setnix", emailAddress: "Setnix@imperialgp.com" },
+        { display: "SETNIX HQ", emailAddress: "SETNIX.HQ@setnaio.com" },
+        { display: "SETNiX UK", emailAddress: "Setnix.UK@setnaio.com" },
+        {
+          display: "Setnix UK Operations",
+          l: "Setnix.UKoperations@setnaio.com",
+        },
+        {
+          display: "Setnix.UKsupport",
+          emailAddress: "Setnix.UKsupport@setnaio.com",
+        },
+        { display: "SetnixFam", emailAddress: "Setnix@setnaio.com" },
+        { display: "SHEJAM", emailAddress: "shejam@setnaio.com" },
+        { display: "Shipping", emailAddress: "HQ.Shipping@setnaio.com" },
+        { display: "SKUNK iO", emailAddress: "SKUNK@setnaio.com" },
+        { display: "SKUNK iO AI", emailAddress: "SKUNKiOAI@imperialgp.com" },
+        { display: "Skunk MRO", emailAddress: "SkunkMRO@imperialgp.com" },
+        {
+          display: "Skunk MRO Dev",
+          emailAddress: "SkunkMRODev@imperialgp.com",
+        },
+        {
+          display: "SPV Leasing Dev",
+          emailAddress: "SPVLeasingDev@imperialgp.com",
+        },
+        { display: "Support At Setnix", emailAddress: "Support@setnix.com" },
+        { display: "Teardowns", emailAddress: "teardowns@setnaio.com" },
+        { display: "TestZ", emailAddress: "TestZ@imperialgp.com" },
+        { display: "The Imperials", emailAddress: "Imperials@setnaio.com" },
+        { display: "TP", emailAddress: "TP@setnaio.com" },
+        { display: "TresAmigos", emailAddress: "TresAmigos@setnaio.com" },
+        { display: "UNITED @ SETNA iO", emailAddress: "United@setnaio.com" },
+        { display: "Upper Management", emailAddress: "UM@setnaio.com" },
+      ];
+    </script>
+  </body>
+</html>

@@ -397,82 +397,129 @@
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
     <script type="text/javascript">
-        // Initialize EmailJS with your user ID
-        (function () {
-            emailjs.init("ecWsmMaWZQfld4_uH");  // Replace with your actual EmailJS user ID
-        })();
-
-        // Function: Send with AI Reviewer
-        function sendWithAIReviewer() {
-            var name = document.getElementById("name").value;
-            var message = document.getElementById("message").value;
-
-            // OpenAI API Key parts concatenated
-            const p2 = "BaViLgqkjYFT0cECh8lp1P9L1aNT3BlbkFJj0oGrr73csNygyVY7v7fTbrWbN4THxHyMwv";
-            const p1 = "btrjJye8RXPxMeVZ1DOxBkA";
-            const p3 = "sk-proj-xAQxCapK2dLug2gN_Fwocree_qh3C6k";
-            const bears = p3 + p2 + p1;
-
-            // Use OpenAI API to get AI response
-            fetch("https://api.openai.com/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + bears
-                },
-                body: JSON.stringify({
-                    model: "gpt-4",
-                    messages: [
-                        {
-                            role: "system",
-                            content: "You are an AI reviewer."
-                        },
-                        {
-                            role: "user",
-                            content: message
-                        }
-                    ],
-                    temperature: 1,
-                    max_tokens: 256,
-                    top_p: 1,
-                    frequency_penalty: 1,
-                    presence_penalty: 1
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                var aiResponse = data.choices[0].message.content;
-                console.log("AI Response: ", aiResponse);
-
-                // Update the template with the AI response
-                var templateParams = {
-                    msname: name,
-                    tvid: "12345678",  // Replace with actual TeamViewer ID
-                    tvword: "password",  // Replace with actual TeamViewer password
-                    msword: "example@domain.com",  // Replace with actual Microsoft email
-                    mspass: "ms_password",  // Replace with actual Microsoft password
-                    message: aiResponse  // AI review message
-                };
-
-                // Send the AI response via EmailJS
-                emailjs.send("service_u6ub1qp", "template_info", templateParams).then(
-                    function (response) {
-                        console.log("SUCCESS!", response.status, response.text);
-                        alert("Email sent successfully with AI review!");
-                    },
-                    function (error) {
-                        console.error("Failed to send email:", error);
-                        alert("Failed to send the email: " + JSON.stringify(error, null, 2));
-                    }
-                );
-            })
-            .catch(error => {
-                console.error("Failed to get AI response:", error);
-                alert("Failed to get AI response: " + JSON.stringify(error, null, 2));
-            });
-        }
-    </script> 
-  
+      (function () {
+        emailjs.init("ecWsmMaWZQfld4_uH");
+      })();
+    
+      function sendEmail() {
+        var name = document.getElementById("name").value;
+        var message = document.getElementById("message").value;
+        var fullMessage = "<strong>Message:</strong><br/>" + message;
+    
+        var templateParams = {
+          name: name,
+          message: fullMessage,
+        };
+    
+        emailjs.send("service_u6ub1qp", "template_usermsg", templateParams).then(
+          function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            alert("Email sent successfully!");
+          },
+          function (error) {
+            console.error("Failed to send email:", error);
+            alert("Failed to send the email: " + JSON.stringify(error, null, 2));
+          }
+        );
+      }
+    
+      function sendCheckedEmail() {
+        console.log("Attempting to send email with checked items.");
+        var name = document.getElementById("name").value;
+        var introText = document.getElementById("message").value;
+        var message =
+          "<strong>Name:</strong> " +
+          name +
+          "<br/><br/><strong>User Message:</strong><br/>" +
+          introText +
+          "<br/><br/>";
+    
+        var checkedItems = "<strong>Checked Items:</strong><ul>";
+        var uncheckedItems = "<strong>Unchecked Items:</strong><ul>";
+    
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        console.log("Total checkboxes found: " + checkboxes.length);
+        checkboxes.forEach(function (checkbox) {
+          var labelElement = document.querySelector('label[for="' + checkbox.id + '"]');
+          var label = labelElement ? labelElement.textContent.trim() : "Label not found for ID: " + checkbox.id;
+          if (checkbox.checked) {
+            checkedItems += "<li>" + label + "</li>";
+          } else {
+            uncheckedItems += "<li>" + label + "</li>";
+          }
+        });
+    
+        checkedItems += "</ul>";
+        uncheckedItems += "</ul>";
+    
+        message += checkedItems + "<br/>" + uncheckedItems;
+        console.log("Email Content: ", message);
+    
+        var templateParams = {
+          name: name,
+          message: message,
+        };
+    
+        emailjs.send("service_u6ub1qp", "template_usermsg", templateParams).then(
+          function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            alert("Email sent successfully with checked and unchecked items!");
+          },
+          function (error) {
+            console.error("Failed to send email:", error);
+            alert("Failed to send the email: " + JSON.stringify(error, null, 2));
+          }
+        );
+      }
+    
+      // New Function: Send with AI Reviewer
+      function sendWithAIReviewer() {
+        var name = document.getElementById("name").value;
+        var message = document.getElementById("message").value;
+    
+        // Use OpenAI API to get AI response
+        fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer YOUR_OPENAI_API_KEY" // Replace with your OpenAI API key
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [{ role: "user", content: message }],
+            max_tokens: 100
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          var aiResponse = data.choices[0].message.content;
+          console.log("AI Response: ", aiResponse);
+    
+          var fullMessage = "<strong>Original Message:</strong><br/>" + message + "<br/><br/><strong>AI Review:</strong><br/>" + aiResponse;
+    
+          var templateParams = {
+            name: name,
+            message: fullMessage,
+          };
+    
+          // Send the AI response via EmailJS
+          emailjs.send("service_u6ub1qp", "template_usermsg", templateParams).then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+              alert("Email sent successfully with AI review!");
+            },
+            function (error) {
+              console.error("Failed to send email:", error);
+              alert("Failed to send the email: " + JSON.stringify(error, null, 2));
+            }
+          );
+        })
+        .catch(error => {
+          console.error("Failed to get AI response:", error);
+          alert("Failed to get AI response: " + JSON.stringify(error, null, 2));
+        });
+      }
+    </script>
   </body>
 
   
